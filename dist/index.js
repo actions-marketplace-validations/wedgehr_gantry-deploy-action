@@ -2073,9 +2073,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const deployGroup = core_1.default.getInput('deploy-group', { required: true });
     const gantryHost = core_1.default.getInput('gantry-host', { required: true });
     const gantryToken = core_1.default.getInput('gantry-token', { required: true });
-    const urlDeploy = gantryHost + '/deploy';
-    const http = (0, http_1.createHttpClient)(gantryToken);
+    core_1.default.setSecret(gantryToken);
     core_1.default.info(`deploying tag version{${deployTag}} to service group{${deployGroup}}`);
+    const urlDeploy = 'https://' + gantryHost + '/deploy';
+    const http = (0, http_1.createHttpClient)(gantryToken);
     const res = yield http.postJson(urlDeploy, {
         group: deployGroup,
         version: deployTag
