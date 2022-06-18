@@ -1,0 +1,42 @@
+{
+  "name": "gantry-deploy-action",
+  "description": "Gantry Deploy Github Action",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "ncc build src/main.ts --source-map --minify --license licenses.txt",
+    "lint": "eslint src/**/*.ts",
+    "format": "eslint --fix src/**/*.ts",
+    "all": "yarn run build && yarn run format"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wedgehr/gantry-deploy-action.git"
+  },
+  "keywords": [
+    "gantry",
+    "deploy",
+    "action"
+  ],
+  "author": "Patrick McCarren",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wedgehr/gantry-deploy-action/issues"
+  },
+  "homepage": "https://github.com/wedgehr/gantry-deploy-action#readme",
+  "dependencies": {
+    "@actions/core": "^1.9.0",
+    "@actions/http-client": "^2.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "@vercel/ncc": "^0.34.0",
+    "eslint": "^8.18.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.7.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
+  }
+}
