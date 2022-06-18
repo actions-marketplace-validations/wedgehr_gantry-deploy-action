@@ -1,7 +1,7 @@
 {
   "name": "gantry-deploy-action",
   "description": "Gantry Deploy Github Action",
-  "main": "dist/index.js",
+  "main": "src/main.ts",
   "scripts": {
     "build": "ncc build src/main.ts --source-map --minify --license licenses.txt",
     "lint": "eslint src/**/*.ts",
