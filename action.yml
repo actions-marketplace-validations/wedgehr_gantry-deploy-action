@@ -1,0 +1,25 @@
+name: "Gantry Deploy"
+description: "Deploy a new image tag through Gantry"
+
+author: "wedgehr"
+branding:
+  icon: "upload-cloud"
+  color: "orange"
+
+inputs:
+  deploy-tag:
+    description: "tag to deploy for image"
+    required: true
+  deploy-group:
+    description: "target service group to deploy"
+    required: true
+  gantry-host:
+    description: "gantry host and port. e.g. 127.0.0.1:8080"
+    required: true
+  gantry-token:
+    description: "gantry authentication token"
+    required: true
+
+runs:
+  using: "node16"
+  main: "index.js"
