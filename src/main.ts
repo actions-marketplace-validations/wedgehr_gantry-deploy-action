@@ -12,12 +12,11 @@ const main = async () => {
   const gantryHost = core.getInput('gantry-host', { required: true });
   const gantryToken = core.getInput('gantry-token', { required: true });
 
-  const urlDeploy = gantryHost + '/deploy';
-
-  const http = createHttpClient(gantryToken);
-
+  core.setSecret(gantryToken);
   core.info(`deploying tag version{${deployTag}} to service group{${deployGroup}}`);
 
+  const urlDeploy = 'https://' + gantryHost + '/deploy';
+  const http = createHttpClient(gantryToken);
   const res = await http.postJson<DeployData>(urlDeploy, {
     group: deployGroup,
     version: deployTag
