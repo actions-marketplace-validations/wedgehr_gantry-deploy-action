@@ -1,5 +1,6 @@
 import core from '@actions/core';
 import httpm from '@actions/http-client';
+import { getInputs } from './context';
 import { createHttpClient } from './http';
 
 interface DeployData extends httpm.HttpClientResponse {
@@ -7,19 +8,15 @@ interface DeployData extends httpm.HttpClientResponse {
 }
 
 export const main = async (): Promise<void> => {
-  const deployTag = core.getInput('deploy-tag', { required: true });
-  const deployGroup = core.getInput('deploy-group', { required: true });
-  const gantryHost = core.getInput('gantry-host', { required: true });
-  const gantryToken = core.getInput('gantry-token', { required: true });
+  const ctx = getInputs();
+  core.setSecret(ctx.gantryToken);
+  core.info(`deploying tag version{${ctx.deployTag}} to service group{${ctx.deployGroup}}`);
 
-  core.setSecret(gantryToken);
-  core.info(`deploying tag version{${deployTag}} to service group{${deployGroup}}`);
-
-  const urlDeploy = 'https://' + gantryHost + '/deploy';
-  const http = createHttpClient(gantryToken);
+  const urlDeploy = 'https://' + ctx.gantryHost + '/deploy';
+  const http = createHttpClient(ctx.gantryToken);
   const res = await http.postJson<DeployData>(urlDeploy, {
-    group: deployGroup,
-    version: deployTag
+    group: ctx.deployGroup,
+    version: ctx.deployTag
   });
 
   core.debug(`gantry response: Status{${res.statusCode}}`);
