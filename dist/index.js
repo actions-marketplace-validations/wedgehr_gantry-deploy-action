@@ -2019,6 +2019,48 @@ exports.debug = debug; // for test
 
 /***/ }),
 
+/***/ 954:
+/***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
+
+"use strict";
+
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.getInputs = void 0;
+const core = __importStar(__nccwpck_require__(186));
+const getInputs = () => ({
+    deployTag: core.getInput('deploy-tag', { required: true }),
+    deployGroup: core.getInput('deploy-group', { required: true }),
+    gantryHost: core.getInput('gantry-host', { required: true }),
+    gantryToken: core.getInput('gantry-token', { required: true })
+});
+exports.getInputs = getInputs;
+
+
+/***/ }),
+
 /***/ 47:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -2067,20 +2109,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 exports.main = void 0;
 const core_1 = __importDefault(__nccwpck_require__(186));
+const context_1 = __nccwpck_require__(954);
 const http_1 = __nccwpck_require__(47);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    const deployTag = core_1.default.getInput('deploy-tag', { required: true });
-    const deployGroup = core_1.default.getInput('deploy-group', { required: true });
-    const gantryHost = core_1.default.getInput('gantry-host', { required: true });
-    const gantryToken = core_1.default.getInput('gantry-token', { required: true });
-    core_1.default.setSecret(gantryToken);
-    core_1.default.info(`deploying tag version{${deployTag}} to service group{${deployGroup}}`);
-    const urlDeploy = 'https://' + gantryHost + '/deploy';
-    const http = (0, http_1.createHttpClient)(gantryToken);
+    const ctx = (0, context_1.getInputs)();
+    core_1.default.setSecret(ctx.gantryToken);
+    core_1.default.info(`deploying tag version{${ctx.deployTag}} to service group{${ctx.deployGroup}}`);
+    const urlDeploy = 'https://' + ctx.gantryHost + '/deploy';
+    const http = (0, http_1.createHttpClient)(ctx.gantryToken);
     const res = yield http.postJson(urlDeploy, {
-        group: deployGroup,
-        version: deployTag
+        group: ctx.deployGroup,
+        version: ctx.deployTag
     });
     core_1.default.debug(`gantry response: Status{${res.statusCode}}`);
     if (((_a = res.result) === null || _a === void 0 ? void 0 : _a.success) !== true) {
