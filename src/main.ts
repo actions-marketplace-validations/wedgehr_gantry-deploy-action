@@ -6,7 +6,7 @@ interface DeployData extends httpm.HttpClientResponse {
   success: boolean;
 }
 
-const main = async () => {
+export const main = async (): Promise<void> => {
   const deployTag = core.getInput('deploy-tag', { required: true });
   const deployGroup = core.getInput('deploy-group', { required: true });
   const gantryHost = core.getInput('gantry-host', { required: true });
