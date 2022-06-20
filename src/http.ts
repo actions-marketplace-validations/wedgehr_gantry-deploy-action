@@ -1,5 +1,5 @@
-import httpm from '@actions/http-client';
-import authModule from '@actions/http-client/lib/auth';
+import * as httpm from '@actions/http-client';
+import * as authModule from '@actions/http-client/lib/auth';
 
 export const createHttpClient = (authToken: string): httpm.HttpClient => {
   const auth: authModule.BearerCredentialHandler = new authModule.BearerCredentialHandler(authToken);
