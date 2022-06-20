@@ -2065,6 +2065,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.main = void 0;
 const core_1 = __importDefault(__nccwpck_require__(186));
 const http_1 = __nccwpck_require__(47);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -2088,9 +2089,10 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     core_1.default.info('successful deployment');
 });
+exports.main = main;
 // Call the main function to run the action
 try {
-    main();
+    (0, exports.main)();
 }
 catch (error) {
     core_1.default.setFailed(error.message);
