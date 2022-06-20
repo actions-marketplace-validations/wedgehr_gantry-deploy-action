@@ -1,5 +1,5 @@
-import core from '@actions/core';
-import httpm from '@actions/http-client';
+import * as core from '@actions/core';
+import * as httpm from '@actions/http-client';
 import { getInputs } from './context';
 import { createHttpClient } from './http';
 
